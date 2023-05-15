@@ -9,13 +9,15 @@ from operators.load_dimension import LoadDimensionOperator
 from operators.data_quality import DataQualityOperator
 from helpers.sql_queries import SqlQueries
 
-AWS_KEY = os.environ.get('AWS_KEY')
-AWS_SECRET = os.environ.get('AWS_SECRET')
+from airflow.providers.amazon.aws.transfers.s3_to_redshift import S3ToRedshiftOperator
+
+# AWS_KEY = os.environ.get('AWS_KEY')
+# AWS_SECRET = os.environ.get('AWS_SECRET')
 
 default_args = {
     'owner': 'udacity',
     'start_date': pendulum.now(),
-    'retries': 3,
+    'retries': 0,
     'retry_delay': timedelta(minutes=5),
     'email_on_retry': False,
     'catchup': False
@@ -30,12 +32,26 @@ def final_project():
 
     start_operator = DummyOperator(task_id='Begin_execution')
 
-    stage_events_to_redshift = StageToRedshiftOperator(
+    stage_events_to_redshift = S3ToRedshiftOperator(
         task_id='Stage_events',
+        redshift_conn_id='redshift',
+        aws_conn_id='aws_credentials',
+        s3_bucket='hpierce-airflow-project1',
+        s3_key='log_data',
+        schema='PUBLIC',
+        table='staging_events',
+        copy_options=["FORMAT AS JSON 'auto'"],
     )
 
-    stage_songs_to_redshift = StageToRedshiftOperator(
+    stage_songs_to_redshift = S3ToRedshiftOperator(
         task_id='Stage_songs',
+        redshift_conn_id='redshift',
+        aws_conn_id='aws_credentials',
+        s3_bucket='hpierce-airflow-project1',
+        s3_key='song_data',
+        schema='PUBLIC',
+        table='staging_songs',
+        copy_options=["FORMAT AS JSON 'auto'"],
     )
 
     load_songplays_table = LoadFactOperator(
