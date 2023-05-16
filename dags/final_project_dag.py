@@ -12,7 +12,7 @@ from helpers.sql_queries import SqlQueries
 
 default_args = {
     'owner': 'udacity',
-    'start_date': pendulum.now(),
+    'start_date': pendulum.datetime(2023, 6, 14),
     'retries': 3,
     'retry_delay': timedelta(minutes=5),
     'email_on_retry': False,
@@ -22,6 +22,7 @@ default_args = {
 @dag(
     default_args=default_args,
     description='Load and transform data in Redshift with Airflow',
+    max_active_runs=1,
     schedule_interval='0 * * * *'
 )
 def final_project():
