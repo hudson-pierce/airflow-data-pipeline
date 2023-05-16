@@ -96,13 +96,13 @@ def final_project():
         task_id='Run_data_quality_checks',
         redshift_conn_id='redshift',
         checks=[
-            {'test_sql': 'SELECT COUNT(*) FROM artists WHERE artistid IS NULL', 'expected_result': 0},
-            {'test_sql': 'SELECT COUNT(*) FROM songplays WHERE playid IS NULL', 'expected_result': 0},
-            {'test_sql': 'SELECT COUNT(*) FROM songplays WHERE start_time IS NULL', 'expected_result': 0},
-            {'test_sql': 'SELECT COUNT(*) FROM songplays WHERE userid IS NULL', 'expected_result': 0},
-            {'test_sql': 'SELECT COUNT(*) FROM songs WHERE songid IS NULL', 'expected_result': 0},
-            {'test_sql': 'SELECT COUNT(*) FROM time WHERE start_time IS NULL', 'expected_result': 0},
-            {'test_sql': 'SELECT COUNT(*) FROM users WHERE userid IS NULL', 'expected_result': 0}
+            {'test_sql': 'SELECT artistid FROM artists WHERE artistid IS NULL', 'expected_result': 0},
+            {'test_sql': 'SELECT playid FROM songplays WHERE playid IS NULL', 'expected_result': 0},
+            {'test_sql': 'SELECT start_time FROM songplays WHERE start_time IS NULL', 'expected_result': 0},
+            {'test_sql': 'SELECT userid FROM songplays WHERE userid IS NULL', 'expected_result': 0},
+            {'test_sql': 'SELECT songid FROM songs WHERE songid IS NULL', 'expected_result': 0},
+            {'test_sql': 'SELECT start_time FROM time WHERE start_time IS NULL', 'expected_result': 0},
+            {'test_sql': 'SELECT userid FROM users WHERE userid IS NULL', 'expected_result': 0}
         ]
     )
 
