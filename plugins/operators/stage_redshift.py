@@ -12,6 +12,7 @@ class StageToRedshiftOperator(BaseOperator):
                  aws_conn_id='',
                  s3_bucket='',
                  s3_key='',
+                 region='',
                  table='',
                  file_format='',
                  json_path='',
@@ -22,6 +23,7 @@ class StageToRedshiftOperator(BaseOperator):
         self.aws_conn_id = aws_conn_id
         self.s3_bucket = s3_bucket
         self.s3_key = s3_key
+        self.region = region
         self.table = table
         self.file_format = file_format
         self.json_path = json_path
@@ -41,6 +43,7 @@ class StageToRedshiftOperator(BaseOperator):
             FROM 's3://{self.s3_bucket}/{self.s3_key}'
             ACCESS_KEY_ID '{aws_access_key}'
             SECRET_ACCESS_KEY '{aws_secret_key}'
+            REGION '{self.region}'
             {self.file_format} '{self.json_path}'
         """
 

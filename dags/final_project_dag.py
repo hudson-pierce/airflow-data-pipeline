@@ -35,6 +35,7 @@ def final_project():
         aws_conn_id='aws_credentials',
         s3_bucket='hpierce-airflow-project1',
         s3_key='log_data',
+        region='us-east-1',
         table='staging_events',
         file_format="JSON",
         json_path='s3://hpierce-airflow-project1/log_json_path.json'
@@ -46,6 +47,7 @@ def final_project():
         aws_conn_id='aws_credentials',
         s3_bucket='hpierce-airflow-project1',
         s3_key='song_data',
+        region='us-east-1',
         table='staging_songs',
         file_format='JSON',
         json_path='auto'
